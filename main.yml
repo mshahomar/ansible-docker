@@ -1,0 +1,28 @@
+---
+- hosts: localhost
+  become: yes
+  become_method: sudo
+
+  tasks:
+    - name: Install PIP - assume ansible master is running on CentOS or RHEL
+      yum: name=python-pip state=present
+
+    - name: Pip-Install pre-requisite library docker-py
+      pip: name=docker-py state=present
+
+    - name: Build nginx docker image from Dockerfile
+      docker_image:
+        name: web-nginx
+        path: docker
+        state: build
+    - name: Run the dockerized-nginx container
+      docker_container:
+        image: web-nginx:latest
+        state: started
+        name: web-nginx
+        restart: yes
+        restart_policy: always
+        ports:
+          - "80:80"
+    - name: Verify container running
+      shell: docker ps
