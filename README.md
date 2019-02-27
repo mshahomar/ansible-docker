@@ -9,7 +9,7 @@ Execute this command:
 ansible-playbook main.yml
 </pre>
 
-Open this link on your browser: http://localhost
+Next, test that it's working by opening this link on your browser: http://localhost
 
 
 ## Explanation
